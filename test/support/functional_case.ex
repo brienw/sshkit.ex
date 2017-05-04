@@ -46,8 +46,13 @@ defmodule SSHKit.FunctionalCase do
 
   def init(host) do
     adduser(host, @user)
+    addgroup(host, "sudo")
+    add_user_to_group(host, @user, "sudo")
     chpasswd(host, @user, @pass)
     keygen(host, @user)
+
+    # TODO: Add case with passwd required (make default?)
+    Docker.exec!([], host.id, "sh", ["-c", "echo '%sudo ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"])
 
     Map.merge(host, %{user: @user, password: @pass})
   end

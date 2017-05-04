@@ -3,7 +3,7 @@ FROM alpine:3.5
 # Set up an Alpine Linux machine running an SSH server.
 # Autogenerate missing host keys.
 
-RUN apk add --no-cache openssh
+RUN apk add --no-cache openssh sudo
 RUN ssh-keygen -A
 
 # Create the skeleton directory, used for creating new users.
